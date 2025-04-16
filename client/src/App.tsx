@@ -9,7 +9,8 @@ const API_URL = "http://localhost:5000/api/tasks";
 
 function App() {
   const [tasksList, setTasksList] = useState<Task[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [loadingTaskId, setLoadingTaskId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,7 +18,6 @@ function App() {
   }, []);
 
   const fetchTasks = async () => {
-    setIsLoading(true);
     try {
       const response = await fetch(API_URL);
       if (!response.ok) throw new Error("Failed to fetch tasks");
@@ -25,8 +25,6 @@ function App() {
       setTasksList(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -34,7 +32,7 @@ function App() {
     const newTaskContent = task.trim();
     if (!newTaskContent) return;
 
-    setIsLoading(true);
+    setIsFormLoading(true);
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -52,12 +50,12 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setIsLoading(false);
+      setIsFormLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    setIsLoading(true);
+    setLoadingTaskId(id);
     try {
       const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
@@ -67,12 +65,12 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setIsLoading(false);
+      setLoadingTaskId(null);
     }
   };
 
   const handleToggleComplete = async (id: string) => {
-    setIsLoading(true);
+    setLoadingTaskId(id);
     try {
       const response = await fetch(`${API_URL}/${id}`, {
         method: "PATCH",
@@ -85,7 +83,7 @@ function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setIsLoading(false);
+      setLoadingTaskId(null);
     }
   };
 
@@ -93,16 +91,13 @@ function App() {
     <div className={styles.container}>
       <Header title="Task List" />
       {error && <div className={styles.error}>{error}</div>}
-      <TaskForm onAddTask={handleAddTask} isLoading={isLoading} />
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <TaskList
-          tasks={tasksList}
-          onDelete={handleDelete}
-          onToggleComplete={handleToggleComplete}
-        />
-      )}
+      <TaskForm onAddTask={handleAddTask} isLoading={isFormLoading} />
+      <TaskList
+        tasks={tasksList}
+        onDelete={handleDelete}
+        onToggleComplete={handleToggleComplete}
+        loadingTaskId={loadingTaskId}
+      />
     </div>
   );
 }

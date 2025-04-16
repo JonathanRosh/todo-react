@@ -28,11 +28,19 @@ function App() {
     );
   };
 
+  const handleDelete = (id: number) => {
+    setTasksList(tasksList.filter((task) => task.id !== id));
+  };
+
   return (
     <div className={styles.container}>
       <Header title="Task List" />
       <TaskForm onAddTask={handleAddTask} />
-      <TaskList tasks={tasksList} onToggleComplete={handleToggleComplete} />
+      <TaskList
+        tasks={tasksList}
+        onToggleComplete={handleToggleComplete}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

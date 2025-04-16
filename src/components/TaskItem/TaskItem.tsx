@@ -4,9 +4,10 @@ import Task from "../../types";
 interface TaskItemProps {
   task: Task;
   onToggleCompleted: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-function TaskItem({ task, onToggleCompleted }: TaskItemProps) {
+function TaskItem({ task, onToggleCompleted, onDelete }: TaskItemProps) {
   return (
     <div id={task.id.toString()} className={styles.item}>
       <span
@@ -16,6 +17,9 @@ function TaskItem({ task, onToggleCompleted }: TaskItemProps) {
       >
         {task.text}
       </span>
+      <button className={styles.deleteButton} onClick={() => onDelete(task.id)}>
+        Delete
+      </button>
     </div>
   );
 }

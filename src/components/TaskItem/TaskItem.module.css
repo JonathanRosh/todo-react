@@ -17,3 +17,18 @@
   flex: 1;
   margin: 0 10px;
 }
+
+.deleteButton {
+  padding: 6px 12px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+}

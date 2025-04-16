@@ -1,0 +1,19 @@
+.item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text {
+  flex: 1;
+  margin: 0 10px;
+}

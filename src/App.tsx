@@ -20,11 +20,19 @@ function App() {
     }
   }
 
+  const handleToggleComplete = (id: number) => {
+    setTasksList(
+      tasksList.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
   return (
     <div className={styles.container}>
       <Header title="Task List" />
       <TaskForm onAddTask={handleAddTask} />
-      <TaskList tasks={tasksList} />
+      <TaskList tasks={tasksList} onToggleComplete={handleToggleComplete} />
     </div>
   );
 }

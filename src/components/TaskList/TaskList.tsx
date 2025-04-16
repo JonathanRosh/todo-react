@@ -4,13 +4,18 @@ import Task from "../../types";
 
 interface TaskListProps {
   tasks: Task[];
+  onToggleComplete: (id: number) => void;
 }
 
-function TaskList({ tasks }: TaskListProps) {
+function TaskList({ tasks, onToggleComplete }: TaskListProps) {
   return (
     <div className={styles.list}>
       {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem
+          key={task.id}
+          task={task}
+          onToggleCompleted={onToggleComplete}
+        />
       ))}
     </div>
   );

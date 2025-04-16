@@ -3,21 +3,24 @@ import Task from "../../types";
 
 interface TaskItemProps {
   task: Task;
-  onToggleCompleted: (id: number) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
+  onToggleComplete: (id: string) => void;
 }
 
-function TaskItem({ task, onToggleCompleted, onDelete }: TaskItemProps) {
+function TaskItem({ task, onDelete, onToggleComplete }: TaskItemProps) {
   return (
-    <div id={task.id.toString()} className={styles.item}>
+    <div className={styles.item}>
       <span
-        onClick={() => onToggleCompleted(task.id)}
         className={styles.text}
         style={{ textDecoration: task.completed ? "line-through" : "none" }}
+        onClick={() => task._id && onToggleComplete(task._id)}
       >
         {task.text}
       </span>
-      <button className={styles.deleteButton} onClick={() => onDelete(task.id)}>
+      <button
+        className={styles.deleteButton}
+        onClick={() => task._id && onDelete(task._id)}
+      >
         Delete
       </button>
     </div>

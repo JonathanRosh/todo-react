@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface TaskFormProps {
   onAddTask: (text: string) => void;
+  isLoading: boolean;
 }
 
-function TaskForm({ onAddTask }: TaskFormProps) {
+function TaskForm({ onAddTask, isLoading }: TaskFormProps) {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,9 +26,10 @@ function TaskForm({ onAddTask }: TaskFormProps) {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Add a new task..."
+        disabled={isLoading}
       />
-      <button className={styles.button} type="submit">
-        Add Task
+      <button className={styles.button} type="submit" disabled={isLoading}>
+        {isLoading ? "Adding..." : "Add Task"}
       </button>
     </form>
   );

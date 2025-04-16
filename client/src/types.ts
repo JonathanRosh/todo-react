@@ -1,7 +1,8 @@
 interface Task {
-  id: number;
+  _id?: string;
   text: string;
   completed: boolean;
+  createdAt?: Date;
 }
 
 export default Task;
